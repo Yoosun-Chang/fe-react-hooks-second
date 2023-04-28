@@ -18,13 +18,8 @@ function TodoList() {
   useEffect(() => {
     // 이곳에 todos에 변화가 생길 때마다 완료한 할 일의 개수(count)를 'update' 하도록 하는 코드를 작성해주세요. (+ dependency array 에는 어떤 값이 들어가야 할까요?)
 
-    let n = 0;
-    for(let i = 0; i<todos.length; i++){
-      if(todos[i].completed===true){
-        n++;
-      }
-    }
-    setCount(n);
+    const n_arr = todos.filter((todo) => todo.completed===true);
+    setCount(n_arr.length);
   }, [todos]);
 
   useEffect(() => {
@@ -59,6 +54,10 @@ function TodoList() {
     setTodos(updatedTodos);
   };
 
+  const handleDelete = (id) => {
+    setTodos((todos) => todos.filter((todo) => todo.id !== id));
+  };
+
   return (
     <div className="todolist">
       <h1>Todo List</h1>
@@ -70,7 +69,7 @@ function TodoList() {
               {todo.text}
             </span>
             {/* 어른 사자의 길을 수행 할 때 아래 코드의 주석을 풀어 handleDelete 함수를 정의해주시면 됩니다*/}
-            {/* <button>삭제</button> */}
+            {<button onClick={()=>handleDelete(todo.id)}>삭제</button> }
           </li>
         ))}
       </ul>
